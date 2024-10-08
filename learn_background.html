@@ -23,6 +23,26 @@
       .attachment-local {
         background-attachment: local;
       }
+      .background-size {
+        width: 600px;
+        height: 300px;
+        border: 1px solid black;
+        background-image: url(/assets/images/dishes-938747_1920.jpg);
+        background-size: contain;
+        background-position: center;
+      }
+      .linear-gradient {
+        width: 500px;
+        height: 200px;
+        border: 1px solid red;
+        background: linear-gradient(45deg, red, blue);
+      }
+      .radial-gradient {
+        border: 1px solid blue;
+        width: 500px;
+        height: 200px;
+        background: radial-gradient(white, yellow);
+      }
     </style>
   </head>
   <body>
@@ -114,5 +134,11 @@
       soluta. Harum, maiores vel id odio quia recusandae cupiditate non,
       incidunt, eligendi facilis alias aliquam dolores?
     </div>
+    <h3>Background-size</h3>
+    <div class="background-size"></div>
+    <h3>linear-gradient</h3>
+    <div class="linear-gradient"></div>
+    <h3>radial-gradient</h3>
+    <div class="radial-gradient"></div>
   </body>
 </html>
