@@ -1,0 +1,20 @@
+section {
+  display: flex;
+  position: relative;
+  align-items: center;
+  margin: 30px;
+}
+div {
+  background-color: rgb(159, 174, 255);
+  color: blue;
+  font-weight: bold;
+  padding: 10px;
+  margin-left: 70px;
+  border-radius: 10px;
+  display: none;
+  position: absolute;
+}
+button {
+  width: 60px;
+  height: 30px;
+}

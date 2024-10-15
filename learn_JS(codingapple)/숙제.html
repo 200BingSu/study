@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="숙제.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <section class="id">
+      <button onclick="버튼('AlertId','block')">아이디</button>
+      <div id="AlertId">
+        아이디를 입력 안하셨어요
+        <button onclick="버튼('AlertId','none')">알았어</button>
+      </div>
+    </section>
+    <section class="password">
+      <button onclick="버튼('AlertPassword','block')">비번</button>
+      <div id="AlertPassword">
+        비번을 입력 안하셨어요
+        <button onclick="버튼('AlertPassword','none')">알았어</button>
+      </div>
+    </section>
+
+    <script>
+      function 버튼(a, b) {
+        document.getElementById(a).style.display = b;
+      }
+    </script>
+  </body>
+</html>
