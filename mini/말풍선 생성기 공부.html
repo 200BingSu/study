@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="chat-container"></div>
+    <input type="text" id="bubble-input" placeholder="말풍선을 입력하세요" />
+    <button id="add-bubble">말풍선 추가</button>
+
+    <script>
+      document
+        .getElementById('add-bubble')
+        .addEventListener('click', function () {
+          //버블 텍스트는 인풋에 적힌 값을 의미한다
+          const input = document.getElementById('bubble-input');
+          const bubbleText = input.value;
+          //공백이 포함되어있는지 검사하기
+          if (bubbleText.trim() === '') {
+            alert('말풍선을 입력해주세요.'); //trim()은 공백을 제거한다. -->만약 버블 텍스트가 공백일 경우(참), 경고창을 띄울 것.
+
+            return; //아래 함수를 진행시키지 말고 돌아가시오.
+          }
+
+          const bubble = document.createElement('div'); //버블은 새로운 'div'를 만들어내는 것이다
+          bubble.classList.add('bubble', 'user'); //버블 모양은 이렇고
+          bubble.textContent = bubbleText; //버블의 텍스트 내용은 위에 정해진 버블 텍스트를 따른다.
+
+          const chatContainer = document.getElementById('chat-container');
+          chatContainer.appendChild(bubble); //버블을 챗컨테이너에 마지막 자식으로 추가한다.
+          chatContainer.scrollTop = chatContainer.scrollHeight; //스크롤을 챗컨테이너 가장 아래로 이동
+
+          input.value = ''; // 입력 필드를 비움
+        });
+    </script>
+  </body>
+</html>
