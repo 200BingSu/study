@@ -13,3 +13,10 @@ div {
   display: none;
   width: 80%;
 }
+button {
+  margin: 10px;
+  width: 80px;
+}
+.yellow-bg {
+  background-color: yellow;
+}
