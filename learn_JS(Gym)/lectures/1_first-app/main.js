@@ -11,3 +11,5 @@ function sayHello() {
 }
 sayHello();
 console.log('---');
+let Hello = document.getElementById('Hello');
+console.log(Hello.textContent);
