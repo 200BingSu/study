@@ -9,6 +9,7 @@ addBtn.addEventListener('click', function () {
   let checkBox = document.createElement('input');
   checkBox.type = 'checkbox';
   checkBox.classList.add('checkbox');
+  checkBox.style.marginRight = '10px';
   checkBox.addEventListener('change', function () {
     if (checkBox.checked) {
       li.classList.add('checked');
