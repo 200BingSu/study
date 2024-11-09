@@ -1,0 +1,47 @@
+.moving-img {
+  display: flex;
+  margin: 0 auto;
+  max-width: 1200px;
+  margin-top: 2000px;
+  justify-content: space-between;
+}
+
+.left {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  transition: all 0.5s;
+  transition-delay: 0.1s;
+  opacity: 0.1;
+}
+.left-active {
+  transform: translate(400px, -300px);
+  justify-content: center;
+  opacity: 1;
+}
+.center {
+  width: 100px;
+  height: 100px;
+  background-color: blueviolet;
+  opacity: 0.1;
+  transition: all 0.5s;
+  transition-delay: 0.5s;
+}
+.center-active {
+  transform: translateY(-300px);
+  justify-content: center;
+  opacity: 1;
+}
+.right {
+  width: 100px;
+  height: 100px;
+  background-color: blue;
+  opacity: 0.1;
+  transition: all 0.5s;
+  transition-delay: 0.3s;
+}
+.right-active {
+  transform: translate(-400px, -300px);
+  justify-content: center;
+  opacity: 1;
+}
