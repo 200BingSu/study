@@ -12,9 +12,10 @@ a {
 body {
   font-size: 20px;
 }
-.menu {
-  opacity: 1;
+
+.menu-non-active {
+  opacity: 0.3;
 }
 .menu-active {
-  opacity: 0.3;
+  opacity: 1;
 }
