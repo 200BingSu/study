@@ -10,7 +10,7 @@ function solution(numer1, denom1, numer2, denom2) {
       answer = [numer1 * denom2 + numer2 * denom1, denom1 * denom2];
     }
   } else {
-    if (denom1 % denom2 === 0) {
+    if (denom2 % denom1 === 0) {
       answer = [numer1 * (denom2 / denom1) + numer2, denom2];
     } else {
       answer = [numer1 * denom2 + numer2 * denom1, denom1 * denom2];
