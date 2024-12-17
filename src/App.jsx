@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import OrderPage from "./pages/Order/OrderPage";
+import LoginPage from "./pages/LoginPage";
+import Header from "./components/Header";
+import MenuList from "./pages/Order/MenuList";
+import MenuDetail from "./pages/Order/MenuDetail";
+import Bucket from "./pages/Order/bucket";
+import Payment from "./pages/Order/payment";
+import CompleteOrder from "./pages/Order/CompleteOrder";
+import { LoginProvider } from "./contexts/LoginContext";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = ({ children }) => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
-
-export default App
+    <BrowserRouter>
+      <LoginProvider>
+        <Header></Header>
+        <Routes>
+          {/* 홈 */}
+          <Route path="/" element={<HomePage />} />
+          {/* 로그인 */}
+          <Route path="/login" element={<LoginPage />} />
+          {/* 주문 */}
+          <Route path="/order">
+            <Route index element={<OrderPage />} />
+            <Route path="menu-list" element={<MenuList />} />
+            <Route path="menu-detail" element={<MenuDetail />} />
+            <Route path="bucket" element={<Bucket />} />
+            <Route path="payment" element={<Payment />} />
+            <Route path="complete-order" element={<CompleteOrder />} />
+          </Route>
+        </Routes>
+      </LoginProvider>
+    </BrowserRouter>
+  );
+};
+export default App;
