@@ -136,6 +136,44 @@ const InsertFile = () => {
     return `${onlyNums.slice(0, 6)}-${onlyNums[6]}${masked}`;
   };
 
+  /**
+   * base64 문자열을 File 객체와 dataUrl로 변환
+   * @param {string} base64Str - base64 인코딩된 이미지 문자열 (data:image/png;base64,xxx 일 수도 있고 순수 base64일 수도 있음)
+   * @param {string} fileName - 생성할 파일 이름
+   * @returns {{ file: File, dataUrl: string }}
+   */
+  function base64ToFile(base64Str, fileName = "image.png") {
+    // dataUrl 형식인지 확인
+    let mime = "";
+    let base64Data = "";
+
+    if (base64Str.startsWith("data:")) {
+      const parts = base64Str.split(",");
+      mime = parts[0].match(/:(.*?);/)[1];
+      base64Data = parts[1];
+    } else {
+      mime = "image/png"; // 기본값
+      base64Data = base64Str;
+    }
+
+    // base64 → byte array
+    const byteString = atob(base64Data);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+
+    // File 객체 생성
+    const file = new File([ab], fileName, { type: mime });
+
+    // dataUrl 반환 (미리보기용)
+    const dataUrl = `data:${mime};base64,${base64Data}`;
+
+    return { file, dataUrl };
+  }
+
   return (
     <div>
       <div>
@@ -159,14 +197,23 @@ const InsertFile = () => {
       </div>
       <div>
         {dataList.map((item, index) => {
+          const { file, dataUrl } = base64ToFile(
+            item.file_data,
+            item.file_name,
+          );
+
           return (
-            <button
-              type="button"
-              key={index}
-              onClick={() => downloadByteaFile(item.file_name, item.file_data)}
-            >
-              {item.file_name}
-            </button>
+            <div key={index}>
+              <img src={dataUrl} alt="미리보기" style={{ maxWidth: 300 }} />
+              <button
+                type="button"
+                onClick={() =>
+                  downloadByteaFile(item.file_name, item.file_data)
+                }
+              >
+                {item.file_name}
+              </button>
+            </div>
           );
         })}
       </div>
