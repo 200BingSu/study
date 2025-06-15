@@ -1,8 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import { maskSsnBack } from "./Util";
 
+const hospitalList = [
+  { id: "1", name: "병원A" },
+  { id: "2", name: "병원B" },
+  { id: "3", name: "병원C" },
+];
+
 /* eslint-disable react/prop-types */
-const FormItem = ({ label = "", type = "text", value, onChange }) => {
+const FormItem = ({
+  label = "",
+  type = "text",
+  value,
+  onChange,
+  placeholder = "",
+  checkBoxLabel = "",
+}) => {
   const middleRef = useRef(null);
   const backRef = useRef(null);
 
@@ -33,7 +46,7 @@ const FormItem = ({ label = "", type = "text", value, onChange }) => {
             value={value ?? ""}
             onChange={e => onChange(e)}
             className="flex-1 w-full h-full px-2"
-            placeholder="이름을 입력해주세요"
+            placeholder={placeholder}
           />
         );
 
@@ -64,7 +77,7 @@ const FormItem = ({ label = "", type = "text", value, onChange }) => {
                   backRef.current?.focus();
                 }
               }}
-              className=" h-full"
+              className=" h-full w-full flex-1"
             />
             -
             <input
@@ -82,7 +95,7 @@ const FormItem = ({ label = "", type = "text", value, onChange }) => {
                 setIsEdit(true);
                 setMaskingValue("");
               }}
-              className=" h-full"
+              className=" h-full w-full flex-1"
             />
             <span className={`${isEdit ? "invisible" : "visible"}`}>
               ({getGenderText()})
@@ -124,8 +137,35 @@ const FormItem = ({ label = "", type = "text", value, onChange }) => {
           </div>
         );
       }
-
+      case "booleanCheckBox": {
+        return (
+          <label className="flex items-center gap-2">
+            <input type="checkbox" checked={value} onChange={onChange} />
+            <p>{checkBoxLabel}</p>
+          </label>
+        );
+      }
+      case "radio": {
+        return (
+          <div className="flex items-center gap-2">
+            {hospitalList.map(hospital => (
+              <label key={hospital.id} className="flex items-center gap-1">
+                <input
+                  type="radio"
+                  name="hospital"
+                  value={hospital.name}
+                  data-value={hospital.id}
+                  checked={value === hospital.name}
+                  onChange={onChange}
+                />
+                {hospital.name}
+              </label>
+            ))}
+          </div>
+        );
+      }
       default:
+        console.log("renderInput type 없음", type);
         return null;
     }
   };

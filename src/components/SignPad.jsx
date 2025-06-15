@@ -1,9 +1,10 @@
-import { useEffect, useRef } from "react";
+/* eslint-disable no-unused-vars */
+// filepath: [SignPad.jsx](http://_vscodecontentref_/3)
+import React, { useEffect, useRef, forwardRef } from "react";
 import SignaturePad from "signature_pad";
 
-const SignPad = () => {
-  const canvasRef = useRef(null);
-  const sigPadRef = useRef(null);
+const SignPad = forwardRef(({ onInit }, ref) => {
+  const signPadRef = useRef(null);
 
   const url = import.meta.env.VITE_API_URL;
 
@@ -23,58 +24,43 @@ const SignPad = () => {
   };
 
   const clear = () => {
-    sigPadRef.current?.clear();
+    ref.current?.clear();
   };
 
   const save = () => {
-    if (sigPadRef.current?.isEmpty()) {
+    if (ref.current?.isEmpty()) {
       alert("서명을 먼저 해주세요.");
       return;
     }
-
-    const dataUrl = sigPadRef.current.getTrimmedCanvas().toDataURL("image/png");
-    fetch(dataUrl)
-      .then(res => res.blob())
-      .then(blob => {
-        const file = new File([blob], "sign.png", { type: "image/png" });
-        postFileData(file, "sign.png");
-      });
-    postFileData(dataUrl, "sign.png");
-    // PNG 다운로드
-    const link = document.createElement("a");
-    link.href = dataUrl;
-    link.download = "signature.png";
-    link.click();
+    const canvas = ref.current;
+    canvas.toBlob(blob => {
+      if (blob) {
+        const file = new File([blob], "sign_apply.png", { type: "image/png" });
+        // onSave(value, file); // file을 콜백으로 넘김
+      }
+    }, "image/png");
   };
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    sigPadRef.current = new SignaturePad(canvas);
-  }, []);
+    if (ref.current && !ref.current._signaturePad) {
+      // 이미 SignaturePad 인스턴스가 있으면 새로 만들지 않음
+      ref.current._signaturePad = new SignaturePad(ref.current);
+      if (onInit) onInit(ref.current._signaturePad);
+    }
+  }, [ref, onInit]);
 
   return (
     <div>
       <canvas
-        ref={canvasRef}
+        ref={ref}
         width={400}
         height={200}
         style={{ border: "1px solid #000" }}
       />
-      <div className="flex gap-2">
-        <button
-          onClick={clear}
-          className="bg-red-500 text-white px-4 py-2 rounded"
-        >
-          지우기
-        </button>
-        <button
-          onClick={save}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          저장
-        </button>
-      </div>
+      {/* 버튼 등은 필요에 따라 추가 */}
     </div>
   );
-};
+});
+
+SignPad.displayName = "SignPad";
 export default SignPad;
