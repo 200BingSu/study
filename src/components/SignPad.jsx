@@ -1,8 +1,10 @@
-import { useRef } from "react";
-import SignatureCanvas from "react-signature-canvas";
+import { useEffect, useRef } from "react";
+import SignaturePad from "signature_pad";
 
 const SignPad = () => {
-  const sigCanvasRef = useRef(null);
+  const canvasRef = useRef(null);
+  const sigPadRef = useRef(null);
+
   const url = import.meta.env.VITE_API_URL;
 
   const postFileData = async (file, fileName) => {
@@ -21,18 +23,16 @@ const SignPad = () => {
   };
 
   const clear = () => {
-    sigCanvasRef.current?.clear();
+    sigPadRef.current?.clear();
   };
 
   const save = () => {
-    if (sigCanvasRef.current?.isEmpty()) {
+    if (sigPadRef.current?.isEmpty()) {
       alert("서명을 먼저 해주세요.");
       return;
     }
 
-    const dataUrl = sigCanvasRef.current
-      .getTrimmedCanvas()
-      .toDataURL("image/png");
+    const dataUrl = sigPadRef.current.getTrimmedCanvas().toDataURL("image/png");
     fetch(dataUrl)
       .then(res => res.blob())
       .then(blob => {
@@ -46,16 +46,19 @@ const SignPad = () => {
     link.download = "signature.png";
     link.click();
   };
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    sigPadRef.current = new SignaturePad(canvas);
+  }, []);
+
   return (
     <div>
-      <SignatureCanvas
-        ref={sigCanvasRef}
-        penColor="black"
-        canvasProps={{
-          width: 500,
-          height: 200,
-          className: "border border-gray-300 rounded-md",
-        }}
+      <canvas
+        ref={canvasRef}
+        width={400}
+        height={200}
+        style={{ border: "1px solid #000" }}
       />
       <div className="flex gap-2">
         <button
