@@ -1,9 +1,9 @@
-import BarWithSubLabels from "./components/barChart";
+import Privacy from "./components/Privacy";
 
 const App = () => {
   return (
     <div>
-      <BarWithSubLabels />
+      <Privacy />
     </div>
   );
 };
